@@ -10,27 +10,28 @@ public class Radio {
     }
 
     public void setRadioStations(int newRadioStations) {
-        if (newRadioStations <= 9 && newRadioStations >= 0) {
-            radioStations = newRadioStations;
+        if (newRadioStations < 0) {
+            return;
         }
+
+        if (newRadioStations > 9) {
+            return;
+        }
+        radioStations = newRadioStations;
     }
 
     public void nextRadioStations() {
-        if (getRadioStations() < 9) {
-            radioStations++;
-            return;
-        }
-        if (radioStations == 9) {
+        if (radioStations >= 9) {
             radioStations = 0;
+        } else {
+            radioStations = radioStations + 1;
         }
     }
 
     public void prevRadioStations() {
-        if (radioStations < 9 && radioStations != 0) {
-            radioStations--;
-            return;
-        }
-        if (radioStations == 0) {
+        radioStations--;
+
+        if (radioStations <=0) {
             radioStations = 9;
         }
     }
@@ -41,19 +42,24 @@ public class Radio {
     }
 
     public void setVolume(int newVolume) {
-        if (newVolume <= 10 && newVolume >= 0) {
-            volume = newVolume;
+        if (newVolume < 0) {
+            return;
         }
+
+        if (newVolume > 10) {
+            return;
+        }
+        volume = newVolume;
     }
 
     public void increaseVolume() {
-        if (volume < 10) {
+        if (volume < 10 ) {
             volume++;
         }
     }
 
     public void reduceVolume() {
-        if (volume < 10) {
+        if (volume > 0) {
             volume--;
         }
     }
