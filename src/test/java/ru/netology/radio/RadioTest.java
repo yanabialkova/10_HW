@@ -6,111 +6,127 @@ import org.junit.jupiter.api.Test;
 public class RadioTest {
 
     @Test
-    public void shouldShowNumberOfRadioStations() {
+    public void shouldInitializeWithoutParameters() {
+        Radio radio = new Radio();
+        Assertions.assertEquals(10, radio.getCountRadioStations());
+        Assertions.assertEquals(0, radio.getRadioStation());
+        Assertions.assertEquals(0, radio.getVolume());
+    }
+
+    @Test
+    public void shouldInitializeWithCountOfRadioStations() {
+        Radio radio = new Radio(30);
+        Assertions.assertEquals(30, radio.getCountRadioStations());
+        Assertions.assertEquals(0, radio.getRadioStation());
+        Assertions.assertEquals(0, radio.getVolume());
+    }
+
+    @Test
+    public void shouldShowNumberOfRadioStation() {
         Radio radio = new Radio();
 
-        radio.setRadioStations(5);
+        radio.setRadioStation(5);
 
         int expected = 5;
-        int actual = radio.getRadioStations();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldShowNotCorrectNumberOfRadioStationsDown_0() {
+    public void shouldShowNotCorrectNumberOfRadioStationsIfLessThan_0() {
         Radio radio = new Radio();
 
-        radio.setRadioStations(-1);
+        radio.setRadioStation(-1);
 
         int expected = 0;
-        int actual = radio.getRadioStations();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldShowNotCorrectNumberOfRadioStationsMore_9() {
-        Radio radio = new Radio();
+    public void shouldShowNotCorrectNumberOfRadioStationsIfMoreThanCount() {
+        Radio radio = new Radio(10);
 
-        radio.setRadioStations(12);
+        radio.setRadioStation(12);
 
         int expected = 0;
-        int actual = radio.getRadioStations();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
 
     @Test
-    public void shouldShowNumberOfNextRadioStations() {
+    public void shouldShowNumberOfNextRadioStation() {
         Radio radio = new Radio();
 
-        radio.setRadioStations(8);
+        radio.setRadioStation(8);
 
         int expected = 9;
-        radio.nextRadioStations();
-        int actual = radio.getRadioStations();
+        radio.nextRadioStation();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldShowNotCorrectNumberOfNextRadioStationsEqual_9() {
-        Radio radio = new Radio();
+    public void shouldShowNotCorrectNumberOfNextRadioStationIfMoreThanCount() {
+        Radio radio = new Radio(10);
 
-        radio.setRadioStations(9);
+        radio.setRadioStation(9);
 
         int expected = 0;
-        radio.nextRadioStations();
-        int actual = radio.getRadioStations();
+        radio.nextRadioStation();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
+//    @Test
+//    public void shouldShowCorrectNumberOfNextRadioStation() {
+//        Radio radio = new Radio();
+//
+//        radio.setRadioStation(7);
+//
+//        int expected = 8;
+//        radio.nextRadioStation();
+//        int actual = radio.getRadioStation();
+//
+//        Assertions.assertEquals(expected, actual);
+//    }
+
+
+
     @Test
-    public void shouldShowNotCorrectNumberOfNextRadioStationsMore_9() {
+    public void shouldShowNumberOfPrevRadioStation() {
         Radio radio = new Radio();
 
-        radio.setRadioStations(7);
-
-        int expected = 8;
-        radio.nextRadioStations();
-        int actual = radio.getRadioStations();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-
-
-    @Test
-    public void shouldShowNumberOfPrevRadioStations() {
-        Radio radio = new Radio();
-
-        radio.setRadioStations(2);
+        radio.setRadioStation(2);
 
         int expected = 1;
-        radio.prevRadioStations();
-        int actual = radio.getRadioStations();
+        radio.prevRadioStation();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldShowNotCorrectNumberOfPrevRadioStations() {
-        Radio radio = new Radio();
+    public void shouldShowNotCorrectNumberOfPrevRadioStation() {
+        Radio radio = new Radio(10);
 
-        radio.setRadioStations(0);
+        radio.setRadioStation(0);
 
         int expected = 9;
-        radio.prevRadioStations();
-        int actual = radio.getRadioStations();
+        radio.prevRadioStation();
+        int actual = radio.getRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldShowIncreaseVolumeRadioStations() {
+    public void shouldShowIncreaseVolume() {
         Radio volume = new Radio();
 
         volume.setVolume(3);
@@ -123,12 +139,12 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldShowNotCorrectIncreaseVolumeRadioStations() {
+    public void shouldShowNotCorrectIncreaseVolume() {
         Radio volume = new Radio();
 
-        volume.setVolume(10);
+        volume.setVolume(100);
 
-        int expected = 10;
+        int expected = 100;
         volume.increaseVolume();
         int actual = volume.getVolume();
 
@@ -136,7 +152,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldShowReduceVolumeRadioStations() {
+    public void shouldShowReduceVolume() {
         Radio volume = new Radio();
 
         volume.setVolume(7);
@@ -149,7 +165,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldShowReduceVolumeRadioStationsMore_10() {
+    public void shouldShowReduceVolumeLessThan_0() {
         Radio volume = new Radio();
 
         volume.setVolume(0);
@@ -162,7 +178,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldShowVolumeOfRadioStations() {
+    public void shouldSetVolume() {
         Radio radio = new Radio();
 
         radio.setVolume(5);
@@ -174,25 +190,25 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldShowNotCorrectVolumeOfRadioStations() {
+    public void shouldNotSetVolumeMoreThan_100() {
         Radio radio = new Radio();
 
-        radio.setVolume(11);
+        radio.setVolume(101);
 
         int expected = 0;
-        int actual = radio.getRadioStations();
+        int actual = radio.getVolume();
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldShowNotCorrectVolumeOfRadioStationsDone_0() {
+    public void shouldNotSetVolumeLessThan_0() {
         Radio radio = new Radio();
 
-        radio.setVolume(-11);
+        radio.setVolume(-1);
 
         int expected = 0;
-        int actual = radio.getRadioStations();
+        int actual = radio.getVolume();
 
         Assertions.assertEquals(expected, actual);
     }
